@@ -76,12 +76,21 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 
 - (void) propertyValue: (id) aName be: (id) aValue
 {
+	[self basicPropertyValue: aName be: aValue];
+}
+
+- (void) basicPropertyValue: (id) aName be: (id) aValue
+{
 	var property = [_propertiesByName objectForKey: aName];
-	[property value: aValue];
-	//CPLog.info([property name]);
-	//CPLog.info(aValue);
-	if (_fireNotifications) {
-		[self changed];
+	if (property != nil) {	
+		[property value: aValue];
+		CPLog.info(@"Setting property " + [property name]);
+		CPLog.info(@"Value set " + aValue);
+		if (_fireNotifications) {
+			[self changed];
+		}
+	} else {
+		CPLog.info("Property not found " + aName);
 	}
 }
 
@@ -106,5 +115,20 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 - (void) fireNotifications: (bool) aValue
 {
 	_fireNotifications = aValue;
+}
+
+- (void) initializeWithProperties: (id) properties
+{
+	[self fireNotifications: NO];
+	
+	var keys = [properties allKeys];
+	
+	for (var i = 0; i < [keys count]; i++) { 
+		var propertyName = [keys objectAtIndex:i];
+		var propertyValue = [properties valueForKey: propertyName];
+		[self basicPropertyValue: propertyName be: propertyValue];
+	}
+	
+	[self fireNotifications: YES];
 }
 @end
