@@ -146,4 +146,13 @@
 	[self setFrame: newFrame];
 }
 
+- (Figure) source
+{
+    return _sourceFigure;
+}
+
+- (Figure) target
+{
+    return _targetFigure;
+}
 @end

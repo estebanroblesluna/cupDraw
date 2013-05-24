@@ -422,4 +422,27 @@
 {
 	
 }
+
+
+- (void) fadeIn
+{
+	var frame = [self frame];
+	var animations = [CPDictionary 
+		dictionaryWithObjects:[self, frame, frame, CPViewAnimationFadeInEffect]
+        forKeys: [CPViewAnimationTargetKey, CPViewAnimationStartFrameKey, CPViewAnimationEndFrameKey, CPViewAnimationEffectKey]];
+
+	var animation = [[CPViewAnimation alloc] initWithViewAnimations: [CPArray arrayWithObject: animations]];
+	[animation startAnimation];
+}
+
+- (void) fadeOut
+{
+	var frame = [self frame];
+	var animations = [CPDictionary 
+		dictionaryWithObjects:[self, frame, frame, CPViewAnimationFadeOutEffect]
+        forKeys: [CPViewAnimationTargetKey, CPViewAnimationStartFrameKey, CPViewAnimationEndFrameKey, CPViewAnimationEffectKey]];
+
+	var animation = [[CPViewAnimation alloc] initWithViewAnimations: [CPArray arrayWithObject: animations]];
+	[animation startAnimation];
+}
 @end
