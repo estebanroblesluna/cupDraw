@@ -43,6 +43,7 @@
 @import "ImageFigure.j"
 @import "ToolboxFigure.j"
 @import "LabelFigure.j"
+@import "LinkFigure.j"
 @import "PropertiesFigure.j"
 @import "IconLabelFigure.j"
 @import "RectangleFigure.j"

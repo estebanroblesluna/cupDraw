@@ -68,9 +68,11 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 {
 	[_backgroundLayer clearFigures];
 	
-	var frame = CGRectMake(0, 0, 1600, 1600);
-	var grid = [Grid frame: frame showGrid: [self showGrid] gridSize: [self gridSize]];
-	[_backgroundLayer addFigure: grid];
+	if ([self showGrid]) {
+		var frame = CGRectMake(0, 0, 1600, 1600);
+		var grid = [Grid frame: frame showGrid: [self showGrid] gridSize: [self gridSize]];
+		[_backgroundLayer addFigure: grid];
+	}
 }
 
 - (void) select

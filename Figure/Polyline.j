@@ -20,6 +20,7 @@ var CachedNotificationCenter    = nil;
 @implementation Polyline : Figure 
 { 
 	CPMutableArray _points;
+	id _lineWidth;
 } 
 
 - (id) initWithPoints: (CPArray) anArrayOfPoints
@@ -29,6 +30,8 @@ var CachedNotificationCenter    = nil;
 	self = [super initWithFrame: frame];
 
 	_points = [CPMutableArray arrayWithArray: anArrayOfPoints];
+	_lineWidth = 0.5;
+	
 	for (var i = 0; i < [_points count]; i++) { 
 	    var point = [_points objectAtIndex:i];
 		
@@ -42,6 +45,11 @@ var CachedNotificationCenter    = nil;
 	if (self) {
 		return self;
 	}
+}
+
+- (id) points
+{
+	return _points;
 }
 
 - (Handle) addNewHandle: (int) anIndex
@@ -206,7 +214,7 @@ var CachedNotificationCenter    = nil;
 	
 	//CGContextClosePath(context);
 	CGContextSetStrokeColor(context, [self foregroundColor]);
-	CGContextSetLineWidth(context, 0.5);
+	CGContextSetLineWidth(context, _lineWidth);
     CGContextStrokePath(context);
 }
 
@@ -221,5 +229,15 @@ var CachedNotificationCenter    = nil;
 		[_points replaceObjectAtIndex: i withObject: point];
 	}
 	[super translatedBy: aPoint];
+}
+
+- (id) lineWidth
+{
+	return _lineWidth;
+}
+
+- (void) lineWidth: aLineWidth
+{
+	_lineWidth = aLineWidth;
 }
 @end
