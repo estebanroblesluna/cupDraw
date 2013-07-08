@@ -26,11 +26,16 @@
 	return widget;
 }
 
++ (RectangleFigure) newWith: (id) aFrame
+{
+	var widget = [[self new] initWithFrame: aFrame];
+	return widget;
+}
+
 - (id) initWithFrame: (CGRect) aFrame
 { 
-	self = [super initWithFrame:aFrame];
+	self = [super initWithFrame: aFrame];
 	if (self) {
-		
 		[handles addObject: [Handle target: self selector: @"topLeft"]];
 		[handles addObject: [Handle target: self selector: @"topMiddle"]];
 		[handles addObject: [Handle target: self selector: @"topRight"]];

@@ -15,20 +15,21 @@
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
-@implementation DrawingModel : Model
+@implementation LinkFigure : LabelFigure 
 {
 }
 
-- (id) init
-{
-	[super init];
-	
-	[self addProperty: @"Name" value: @""];
-	[self addProperty: @"Show grid?" value: NO];
-	[self addProperty: @"Grid size" value: 20];
-	[self addProperty: @"Snap to grid?" value: NO];
-	[self addProperty: @"Floating toolboxes?" value: YES];
-	
+- (id) initWithFrame: (CGRect) aFrame textField: (id) aTextField
+{ 
+	[super initWithFrame: aFrame textField: aTextField];
+	[_textField setTextColor: [CPColor blueColor]];
+	self._DOMElement.style.cursor = "pointer";
 	return self;
+}
+
+- (void) mouseUp: (CPEvent) anEvent
+{
+	var url = [_textField objectValue];
+	window.open(url, '_blank');
 }
 @end

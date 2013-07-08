@@ -28,30 +28,41 @@
 
 + (Connection) source: (Figure) aSourceFigure target: (Figure) aTargetFigure
 {
-	return [[self new] initWithSource: aSourceFigure target: aTargetFigure];
+	return [self source: aSourceFigure target: aTargetFigure points: nil];
 }
 
-- (id) initWithSource: (Figure) aSourceFigure target: (Figure) aTargetFigure
++ (Connection) source: (Figure) aSourceFigure target: (Figure) aTargetFigure points: (id) anArrayOfPoints
+{
+	return [[self new] initWithSource: aSourceFigure target: aTargetFigure points: anArrayOfPoints];
+}
+
+- (id) initWithSource: (Figure) aSourceFigure target: (Figure) aTargetFigure points: (id) anArrayOfPoints
 { 
 	_sourceFigure = aSourceFigure;
 	_targetFigure = aTargetFigure;
 
 	var points = [CPMutableArray array];
-	[points addObject: [_sourceFigure center]];
-	if (_sourceFigure == _targetFigure) {
-		var center = [_sourceFigure center];
-		[points addObject: CGPointMake(center.x + 100, center.y)];
-		[points addObject: CGPointMake(center.x + 100, center.y - 100)];
-		[points addObject: CGPointMake(center.x      , center.y - 100)];
+	
+	if (anArrayOfPoints == nil) {
+		[points addObject: [_sourceFigure center]];
+		if (_sourceFigure == _targetFigure) {
+			var center = [_sourceFigure center];
+			[points addObject: CGPointMake(center.x + 100, center.y)];
+			[points addObject: CGPointMake(center.x + 100, center.y - 100)];
+			[points addObject: CGPointMake(center.x      , center.y - 100)];
+		}
+		[points addObject: [_targetFigure center]];
+	} else {
+		CPLog.debug("[Connection] Points " + anArrayOfPoints);
+		[points addObjectsFromArray: anArrayOfPoints];
 	}
-	[points addObject: [_targetFigure center]];
 	
 	self = [super initWithPoints: points];
 	
 	if (self) {
 		[self recomputeFrame];
 		
-		_magnet1 = [[HandleMagnet alloc] initWithHandle: [self handleAt: 2] source: _sourceFigure target: _targetFigure];
+		_magnet1 = [[HandleMagnet alloc] initWithHandle: [self handleAt: (([points count] - 1) * 2)] source: _sourceFigure target: _targetFigure];
 		_magnet2 = [[HandleMagnet alloc] initWithHandle: [self handleAt: 0] source: _targetFigure target: _sourceFigure];
 
 		[_magnet1 updateHandleLocation: nil];

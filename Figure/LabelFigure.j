@@ -40,14 +40,12 @@
 	return label;
 }
 
-- (id) initWithFrame: (CGRect) aFrame textField: aTextField
+- (id) initWithFrame: (CGRect) aFrame textField: (id) aTextField
 { 
-	self = [super initWithFrame:aFrame];
-	if (self) {
-		_textField = aTextField;
-		[self addSubview: _textField];
-		return self;
-	}
+	[super initWithFrame: aFrame];
+	_textField = aTextField;
+	[self addSubview: _textField];
+	return self;
 }
 
 - (void) figureAt: (CPPoint) aPoint
@@ -58,6 +56,13 @@
 	} else {
 		return nil;
 	}
+}
+
+- (void) setText: (id) aText
+{
+	[_textField setStringValue: aText];
+	[_textField sizeToFit];
+	[self setFrameSize: [_textField frameSize]];
 }
 
 - (bool) isSelectable
