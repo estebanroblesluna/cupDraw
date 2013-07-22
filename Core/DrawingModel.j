@@ -23,11 +23,11 @@
 {
 	[super init];
 	
-	[self addProperty: @"Name" value: @""];
-	[self addProperty: @"Show grid?" value: NO];
-	[self addProperty: @"Grid size" value: 20];
-	[self addProperty: @"Snap to grid?" value: NO];
-	[self addProperty: @"Floating toolboxes?" value: YES];
+	[self addProperty: @"name" displayName: @"Name" value: @""];
+	[self addProperty: @"showGrid" displayName: @"Show grid?" value: NO];
+	[self addProperty: @"gridSize" displayName: @"Grid size" value: 20];
+	[self addProperty: @"snapToGrid" displayName: @"Snap to grid?" value: NO];
+	[self addProperty: @"floatingToolboxes" displayName: @"Floating toolboxes?" value: YES];
 	
 	return self;
 }

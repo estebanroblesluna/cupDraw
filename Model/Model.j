@@ -40,12 +40,36 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 
 - (void) addProperty: (id) aPropertyName value: (id) aValue
 {
-	[self addProperty: aPropertyName value: aValue editable: YES];
+	[self 
+		addProperty: aPropertyName 
+		displayName: aPropertyName 
+		value: aValue];
+}
+
+- (void) addProperty: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue
+{
+	[self 
+		addProperty: aPropertyName 
+		displayName: aDisplayName 
+		value: aValue 
+		editable: YES];
 }
 
 - (void) addProperty: (id) aPropertyName value: (id) aValue editable: (boolean) anEditableValue
 {
-	var property = [Property name: aPropertyName value: aValue];
+	[self 
+		addProperty: aPropertyName 
+		displayName: aPropertyName 
+		value: aValue 
+		editable: anEditableValue];
+}
+
+- (void) addProperty: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue editable: (boolean) anEditableValue
+{
+	var property = [Property 
+		name: aPropertyName 
+		displayName: aDisplayName 
+		value: aValue];
 	[property editable: anEditableValue];
 	[_properties addObject: property];
 	[_propertiesByName setObject: property forKey: aPropertyName];
@@ -60,6 +84,12 @@ ModelPropertyChangedNotification = @"ModelPropertyChangedNotification";
 {
 	var property = [_properties objectAtIndex: anIndex];
 	return [property name];
+}
+
+- (id) propertyDisplayNameAt: (id) anIndex
+{
+	var property = [_properties objectAtIndex: anIndex];
+	return [property displayName];
 }
 
 - (id) propertyValueAt: (id) anIndex
