@@ -185,6 +185,8 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 	var floatingToolboxes = [self floatingToolboxes];
 	var drawingFrame = [self frame];
 
+	CPLog.debug(@"[DRAWING] Model changed, floatingToolboxes:" + floatingToolboxes);
+
 	if (_toolbox != nil) {
 		[_toolbox selectable: floatingToolboxes];
 		[_toolbox moveable: floatingToolboxes];
@@ -200,6 +202,7 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 	}
 
 	if (_properties != nil) {
+		var wasFloatingBefore = ![_properties isMoveable];
 		[_properties selectable: floatingToolboxes];
 		[_properties moveable: floatingToolboxes];
 		
@@ -215,7 +218,7 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 			var newFrame = CGRectMake(leftOffset, drawingFrame.size.height - frame.size.height, drawingFrame.size.width, frame.size.height);
 			[_properties setFrame: newFrame];
 			[_properties setAutoresizingMask: CPViewMinYMargin | CPViewWidthSizable];
-		} else {
+		} else if (wasFloatingBefore) {
 			[_properties setFrame: [PropertiesFigure defaultFrame]];
 		}
 	}

@@ -92,7 +92,7 @@
 {
 	var buttonWidth = 30;
 	var buttonHeight = 25;
-	var button = [CPButton buttonWithTitle: @""];
+	var button = [CPButton buttonWithTitle: @""];
 
 	var y = _currentY;
 	var x = (_currentColumn - 1) * buttonWidth;
@@ -133,8 +133,10 @@
 
 - (void) sizeToFit
 {
+	var currentTopLeft = [self topLeft];
 	var frame = [GeometryUtils computeFrameForViews: [self subviews]];
-	frame.origin.y = frame.origin.y - 15;
+	frame.origin.y = currentTopLeft.y + frame.origin.y - 15;
+	frame.origin.x = currentTopLeft.x;
 	frame.size.height = frame.size.height + 15;
 	[self setFrame: frame];
 }
