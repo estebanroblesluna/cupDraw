@@ -88,25 +88,25 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 
 - (bool) showGrid
 {
-	return [[[self model] propertyValue: @"Show grid?"] boolValue];
+	return [[[self model] propertyValue: @"showGrid"] boolValue];
 }
 
 - (bool) snapToGrid
 {
-	return [[[self model] propertyValue: @"Snap to grid?"] boolValue];
+	return [[[self model] propertyValue: @"snapToGrid"] boolValue];
 }
 
 - (bool) floatingToolboxes
 {
-	return [[[self model] propertyValue: @"Floating toolboxes?"] boolValue];
+	return [[[self model] propertyValue: @"floatingToolboxes"] boolValue];
 }
 
 - (int) gridSize
 {
-	return [[[self model] propertyValue: @"Grid size"] intValue];
+	return [[[self model] propertyValue: @"gridSize"] intValue];
 }
 
-- (void) mouseDown:(CPEvent) anEvent	 
+- (void) mouseDown:(CPEvent) anEvent
 {
 	[_currentTool mouseDown: anEvent];
 }
@@ -170,6 +170,12 @@ DrawingSelectionChangedNotification = @"DrawingSelectionChangedNotification";
 	[[CPNotificationCenter defaultCenter] 
 		postNotificationName: DrawingSelectionChangedNotification 
 		object: self];
+}
+
+- (void) invalidate
+{
+	[self computeBackgroundLayer];
+	[super invalidate];
 }
 
 - (void) modelChanged
