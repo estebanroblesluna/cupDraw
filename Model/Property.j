@@ -18,19 +18,26 @@
 @implementation Property : CPObject
 {
 	id _name;
+	id _displayName;
 	id _value;
 	boolean _editable;
 }
 
 + (Property) name: (id) aPropertyName value: (id) aValue
 {
-	return [[self alloc] initWithName: aPropertyName value: aValue];
+	return [self name: aPropertyName displayName: aPropertyName value: aValue];
 }
 
-- (id) initWithName: (id) aPropertyName value: (id) aValue
++ (Property) name: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue
+{
+	return [[self new] initWithName: aPropertyName displayName: aDisplayName value: aValue];
+}
+
+- (id) initWithName: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue
 {
 	_name = aPropertyName;
 	_value = aValue;
+	_displayName = aDisplayName;
 	_hidden = NO;
 	return self;
 }
@@ -38,6 +45,11 @@
 - (id) name
 {
 	return _name;
+}
+
+- (id) displayName
+{
+	return _displayName;
 }
 
 - (id) value

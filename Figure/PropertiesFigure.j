@@ -117,7 +117,7 @@
 {
 	var model = [_selectedFigure model];
 	if (_nameColumn == aTableColumn) {
-		return [model propertyNameAt: rowIndex];
+		return [model propertyDisplayNameAt: rowIndex];
 	} else {
 		return [model propertyValueAt: rowIndex];
 	}
