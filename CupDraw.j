@@ -23,6 +23,8 @@
 
 @import "CPCancelableTextField.j"
 @import "LPMultiLineTextField.j"
+@import "CPCustomRowTableColumn.j"
+
 @import "GeometryUtils.j"
 @import "HandleMagnet.j"
 

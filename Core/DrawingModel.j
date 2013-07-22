@@ -24,10 +24,10 @@
 	[super init];
 	
 	[self addProperty: @"name" displayName: @"Name" value: @""];
-	[self addProperty: @"showGrid" displayName: @"Show grid?" value: NO];
-	[self addProperty: @"gridSize" displayName: @"Grid size" value: 20];
-	[self addProperty: @"snapToGrid" displayName: @"Snap to grid?" value: NO];
-	[self addProperty: @"floatingToolboxes" displayName: @"Floating toolboxes?" value: YES];
+	[self addProperty: @"showGrid" displayName: @"Show grid?" value: NO type: PropertyTypeBoolean];
+	[self addProperty: @"gridSize" displayName: @"Grid size" value: 20 type: PropertyTypeInteger];
+	[self addProperty: @"snapToGrid" displayName: @"Snap to grid?" value: NO type: PropertyTypeBoolean];
+	[self addProperty: @"floatingToolboxes" displayName: @"Floating toolboxes?" value: YES type: PropertyTypeBoolean];
 	
 	return self;
 }

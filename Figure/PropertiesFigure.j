@@ -63,7 +63,7 @@
 		[_nameColumn setEditable: NO];
 		[_tableView addTableColumn: _nameColumn];
 
-		_valueColumn = [[CPTableColumn alloc] initWithIdentifier:@"valueColumn"];
+		_valueColumn = [[CPCustomRowTableColumn alloc] initWithIdentifier:@"valueColumn"];
 		[[_valueColumn headerView] setStringValue:@"Value"];
 		[_valueColumn setMinWidth: 400];
 		[_valueColumn setEditable: YES];
@@ -148,6 +148,7 @@
 	if (_selectedFigure != nil) {
 		var model = [_selectedFigure model];
 		if (model != nil) {
+			[_valueColumn model: model];
 			[[CPNotificationCenter defaultCenter] 
 				addObserver: self 
 				selector: @selector(reloadData) 
