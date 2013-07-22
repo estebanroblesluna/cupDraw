@@ -61,6 +61,7 @@
 	} else {
 		[_tool clearSelection];
 		[self transitionToInitialState];
+		[_tool select: [_tool drawing]];
 	}
 }
 
