@@ -12,6 +12,11 @@
  * limitations under the License.
  */
 
+PropertyTypeBoolean = @"TYPE_BOOLEAN";
+PropertyTypeInteger = @"TYPE_INTEGER";
+PropertyTypeFloat   = @"TYPE_FLOAT";
+PropertyTypeString  = @"TYPE_STRING";
+
 /**
  * @author "Esteban Robles Luna <esteban.roblesluna@gmail.com>"
  */
@@ -20,6 +25,7 @@
 	id _name;
 	id _displayName;
 	id _value;
+	id _type;
 	boolean _editable;
 }
 
@@ -30,21 +36,32 @@
 
 + (Property) name: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue
 {
-	return [[self new] initWithName: aPropertyName displayName: aDisplayName value: aValue];
+	return [[self new] initWithName: aPropertyName displayName: aDisplayName value: aValue type: PropertyTypeString];
 }
 
-- (id) initWithName: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue
++ (Property) name: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue type: (id) aType
+{
+	return [[self new] initWithName: aPropertyName displayName: aDisplayName value: aValue type: aType];
+}
+
+- (id) initWithName: (id) aPropertyName displayName: (id) aDisplayName value: (id) aValue type: (id) aType
 {
 	_name = aPropertyName;
 	_value = aValue;
 	_displayName = aDisplayName;
 	_hidden = NO;
+	_type = aType;
 	return self;
 }
 
 - (id) name
 {
 	return _name;
+}
+
+- (id) type
+{
+	return _type;
 }
 
 - (id) displayName
