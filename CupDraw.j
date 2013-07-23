@@ -49,6 +49,7 @@
 @import "PropertiesFigure.j"
 @import "IconLabelFigure.j"
 @import "RectangleFigure.j"
+@import "CircleFigure.j"
 @import "GroupFigure.j"
 
 @import "ToolState.j"
