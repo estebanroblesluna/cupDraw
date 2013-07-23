@@ -89,8 +89,8 @@
 
 		if (acceptsNewEndingConnection) {
 			var connectionFigure = [_figureClass source: _initialFigure target: figure points: nil];
-			[_figureClass connect: connectionFigure with: _initialFigure];
 			[_drawing addFigure: connectionFigure];
+			[self postConnectionCreated: connectionFigure];
 
 		} else {
 			[_connection foregroundColor: [CPColor colorWithHexString: @"CC0000"]];
@@ -108,6 +108,10 @@
 	_connection = nil;
 	_initialFigure = nil;
 	[self activateSelectionTool];
+}
+
+- (void) postConnectionCreated: (Connection) aConnectionFigure
+{
 }
 
 @end
