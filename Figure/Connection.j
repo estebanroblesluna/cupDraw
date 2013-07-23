@@ -26,6 +26,11 @@
 	CPPoint _p2Arrow;
 } 
 
++ (Connection) connect: (Figure) aTargetFigure with: (Figure) aSourceFigure
+{
+	return [self source: aSourceFigure target: aTargetFigure];
+}
+
 + (Connection) source: (Figure) aSourceFigure target: (Figure) aTargetFigure
 {
 	return [self source: aSourceFigure target: aTargetFigure points: nil];

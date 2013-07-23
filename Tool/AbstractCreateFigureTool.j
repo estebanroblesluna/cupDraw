@@ -19,7 +19,7 @@
 {
 }
 
-- (void) mouseDown: (CPEvent) anEvent	 
+- (void) mouseDown: (CPEvent) anEvent
 {
 	var point = [anEvent locationInWindow];
 	[self createFigureAt: point on: [self drawing]];

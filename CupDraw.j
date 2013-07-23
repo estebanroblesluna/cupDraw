@@ -62,6 +62,7 @@
 @import "StateMachineTool.j"
 @import "SelectionTool.j"
 @import "AbstractCreateFigureTool.j"
+@import "AbstractCreateConnectionTool.j"
 @import "CreateImageTool.j"
 @import "CreateLabelTool.j"
 
