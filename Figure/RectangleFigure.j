@@ -34,21 +34,23 @@
 
 - (id) initWithFrame: (CGRect) aFrame
 { 
-	self = [super initWithFrame: aFrame];
-	if (self) {
-		[handles addObject: [Handle target: self selector: @"topLeft"]];
-		[handles addObject: [Handle target: self selector: @"topMiddle"]];
-		[handles addObject: [Handle target: self selector: @"topRight"]];
+	[super initWithFrame: aFrame];
+	
+	[self backgroundColor: [CPColor whiteColor]];
+	[self foregroundColor: [CPColor blackColor]];
+	
+	[handles addObject: [Handle target: self selector: @"topLeft"]];
+	[handles addObject: [Handle target: self selector: @"topMiddle"]];
+	[handles addObject: [Handle target: self selector: @"topRight"]];
 
-		[handles addObject: [Handle target: self selector: @"middleLeft"]];
-		[handles addObject: [Handle target: self selector: @"middleRight"]];
+	[handles addObject: [Handle target: self selector: @"middleLeft"]];
+	[handles addObject: [Handle target: self selector: @"middleRight"]];
 
-		[handles addObject: [Handle target: self selector: @"bottomLeft"]];
-		[handles addObject: [Handle target: self selector: @"bottomMiddle"]];
-		[handles addObject: [Handle target: self selector: @"bottomRight"]];
+	[handles addObject: [Handle target: self selector: @"bottomLeft"]];
+	[handles addObject: [Handle target: self selector: @"bottomMiddle"]];
+	[handles addObject: [Handle target: self selector: @"bottomRight"]];
 
-		return self;
-	}
+	return self;
 }
 
 - (void) drawRect:(CGRect)rect on: (id)context
