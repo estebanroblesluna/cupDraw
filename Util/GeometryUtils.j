@@ -141,7 +141,7 @@
 	return point;
 }
 
-+ (CGPoint) distanceFrom: (CGPoint) p1 to: (CGPoint) p2
++ (id) distanceFrom: (CGPoint) p1 to: (CGPoint) p2
 {
 	var xOff = (p1.x - p2.x);
 	var yOff = (p1.y - p2.y);

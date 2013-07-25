@@ -63,9 +63,7 @@
 	self = [super initWithFrame: CGRectMake(point.x - 4, point.y - 4, 8, 8)];
 	//CPLog.debug(self);
 	
-	if (self) {
-		return self;
-	}
+	return self;
 }
 
 - (id) extraArgument
