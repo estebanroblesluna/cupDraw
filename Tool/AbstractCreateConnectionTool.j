@@ -88,10 +88,7 @@
 		var acceptsNewEndingConnection = [self acceptsNewEndingConnection: figure];
 
 		if (acceptsNewEndingConnection) {
-			var connectionFigure = [_figureClass source: _initialFigure target: figure points: nil];
-			[_drawing addFigure: connectionFigure];
-			[self postConnectionCreated: connectionFigure];
-
+			[self createFigureFrom: _initialFigure target: figure points: nil];
 		} else {
 			[_connection foregroundColor: [CPColor colorWithHexString: @"CC0000"]];
 			[_connection lineWidth: 2];
@@ -108,6 +105,13 @@
 	_connection = nil;
 	_initialFigure = nil;
 	[self activateSelectionTool];
+}
+
+- (void) createFigureFrom: (id) source target: (id) target points: (id) points
+{
+	var connectionFigure = [_figureClass source: source target: target points: points];
+	[_drawing addFigure: connectionFigure];
+	[self postConnectionCreated: connectionFigure];
 }
 
 - (void) postConnectionCreated: (Connection) aConnectionFigure
