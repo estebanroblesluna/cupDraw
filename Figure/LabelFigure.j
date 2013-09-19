@@ -79,7 +79,6 @@
 	[_textField setTextColor: aColor];
 }
 
-
 - (void) drawRect:(CGRect)rect on: (id)context
 {
 	CGContextSetFillColor(context, [self backgroundColor]); 
