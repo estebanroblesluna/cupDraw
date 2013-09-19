@@ -44,6 +44,8 @@
 { 
 	[super initWithFrame: aFrame];
 	_textField = aTextField;
+	_backgroundColor = [CPColor whiteColor];
+	_foregroundColor = [CPColor blackColor];
 	[self addSubview: _textField];
 	return self;
 }
@@ -63,6 +65,25 @@
 	[_textField setStringValue: aText];
 	[_textField sizeToFit];
 	[self setFrameSize: [_textField frameSize]];
+}
+
+- (void) backgroundColor: (CPColor) aColor
+{
+	[super backgroundColor: aColor];
+	[self invalidate];
+}
+
+- (void) foregroundColor: (CPColor) aColor
+{
+	[super foregroundColor: aColor];
+	[_textField setTextColor: aColor];
+}
+
+
+- (void) drawRect:(CGRect)rect on: (id)context
+{
+	CGContextSetFillColor(context, [self backgroundColor]); 
+	CGContextFillRect(context, [self bounds]); 
 }
 
 - (bool) isSelectable
