@@ -108,6 +108,7 @@
 	[button setFrameSize: CGSizeMake(buttonWidth, buttonHeight)];
 	[button setTarget: self];
 	[button setAction: aSelector];
+	[button setAlternateTitle: aTitle];
 
 	[self addSubview: button];
 
