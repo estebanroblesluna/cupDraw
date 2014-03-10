@@ -102,7 +102,6 @@
 	var icon = [[CPImage alloc]
 	            initWithContentsOfFile: url];
 	[button setImage: icon];
-	[button setButtonType: CPOnOffButton];
 	[button setBordered: YES];
 	[button setBezelStyle: CPRegularSquareBezelStyle];
 	[button setFrameSize: CGSizeMake(buttonWidth, buttonHeight)];
