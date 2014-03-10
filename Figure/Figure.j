@@ -46,6 +46,7 @@
 	return figure;
 }
 
+
 - (id) init
 { 
 	[super init];
@@ -67,6 +68,16 @@
 	
 	return self;
 } 
+
+
+- (void) removeMyself
+{
+	for (var i = 0; i < [handles count]; i++) { 
+	    var handle = [handles objectAtIndex:i];
+	    [handle removeMyself];
+	}
+	[self removeFromSuperview];
+}
 
 - (id) figureAt: (CPPoint) aPoint
 {

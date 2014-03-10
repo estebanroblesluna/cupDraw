@@ -38,6 +38,11 @@
 	return [SelectionToolInitialState tool: self];
 }
 
+- (id) selectedFigures
+{
+	return _selectedFigures;
+}
+
 - (CPMutableArray) selectedFigures
 {
 	return _selectedFigures;
@@ -108,14 +113,14 @@
 	//CPLog.debug("Selection tool");
 	//CPLog.debug([_selectedFigures count]);
 	
-	if (([anEvent keyCode] == CPKeyCodes.F2) && ([_selectedFigures count] == 1)) {
+	if (([anEvent keyCode] ==~ CPKeyCodes.F2) && ([_selectedFigures count] == 1)) {
 		var currentFigure = [_selectedFigures objectAtIndex: 0];
 		if ([currentFigure isEditable]) {
 			[currentFigure switchToEditMode];
 		}
 	}
 	
-	if ([anEvent keyCode] == CPKeyCodes.DELETE || [anEvent keyCode] == CPKeyCodes.BACKSPACE) {
+	if ([anEvent keyCode] ==~ CPKeyCodes.DELETE || [anEvent keyCode] ==~ CPKeyCodes.BACKSPACE) {
 		for (var i = 0; i < [_selectedFigures count]; i++) { 
 		    var selectedFigure = [_selectedFigures objectAtIndex:i];
 			[selectedFigure removeFromSuperview];
