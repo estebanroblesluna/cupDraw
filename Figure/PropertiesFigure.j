@@ -22,6 +22,9 @@
 	CPTableColumn _nameColumn;
 	CPTableColumn _valueColumn;
 	CPTableView _tableView;
+	id _currentTextFieldEdition;
+	id _currentRowIndex;
+	id _checkboxMapping;
 }
 
 + (CPRect) defaultFrame
@@ -42,6 +45,7 @@
 	if (self) {
 		_drawing = aDrawing;
 		_selectedFigure = nil;
+		_checkboxMapping = [CPDictionary dictionary];
 		
 		[[CPNotificationCenter defaultCenter] 
 			addObserver: self 
@@ -86,15 +90,66 @@
 
 - (void) doubleClick: (id) anObject
 {
-	var column = 1;
-	var row = [_tableView selectedRow];
+	[self cleanUpCurrentTextFieldEdition];
+	
+	var columnIndex = 1;
+	var rowIndex = [_tableView selectedRow];
 
-	[_tableView 
-		editColumn: column
-		row: row
-		withEvent: nil
-		select:YES];
+	var identifier = [_valueColumn UID],
+            textField = _tableView._dataViewsForTableColumns[identifier][rowIndex];
+            
+    [textField setEditable:YES];
+	[[self window] makeFirstResponder: textField];
+	
+	[[CPNotificationCenter defaultCenter] 
+		addObserver: self 
+		selector: @selector(controlTextDidBlur:) 
+		name: CPTextFieldDidBlurNotification 
+		object: textField];
+
+	[[CPNotificationCenter defaultCenter] 
+		addObserver: self 
+		selector: @selector(controlTextDidEndEditing:) 
+		name: CPControlTextDidEndEditingNotification 
+		object: textField];
+			
+	_currentTextFieldEdition = textField;
+	_currentRowIndex = rowIndex;
 }
+
+- (void) controlTextDidEndEditing: (CPNotification) notification
+{
+	var value = [_currentTextFieldEdition objectValue];
+	var model = [_selectedFigure model];
+
+	[model propertyValueAt: _currentRowIndex be: value];
+	[self cleanUpCurrentTextFieldEdition];
+	[[self window] makeFirstResponder: [self drawing]];
+}
+
+- (void) controlTextDidBlur: (CPNotification) notification
+{
+	[self controlTextDidEndEditing: notification];
+}
+
+- (void) cleanUpCurrentTextFieldEdition
+{
+	if (_currentTextFieldEdition != nil) {
+		[[CPNotificationCenter defaultCenter] 
+			removeObserver:self
+			name: CPControlTextDidEndEditingNotification 
+			object: _currentTextFieldEdition];
+			
+		[[CPNotificationCenter defaultCenter] 
+			removeObserver:self
+			name: CPTextFieldDidBlurNotification 
+			object: _currentTextFieldEdition];
+			
+	    [_currentTextFieldEdition setSelectable: NO];
+	    [_currentTextFieldEdition setEditable: NO];
+	}
+}
+
 
 - (int) numberOfRowsInTableView: (CPTableView) aTableView 
 {
@@ -113,22 +168,67 @@
 	}	
 }
 
-- (id) tableView: (CPTableView) aTableView objectValueForTableColumn: (CPTableColumn) aTableColumn row: (int) rowIndex 
-{
-	var model = [_selectedFigure model];
-	if (_nameColumn == aTableColumn) {
-		return [model propertyDisplayNameAt: rowIndex];
-	} else {
-		return [model propertyValueAt: rowIndex];
-	}
-}
-
 - (void) tableView: (CPTableView) aTableView setObjectValue: (id) aValue forTableColumn: (CPTableColumn) aTableColumn row: (int) rowIndex 
 {
 	var model = [_selectedFigure model];
 	if (aTableColumn == _valueColumn) {
 		return [model propertyValueAt: rowIndex be: aValue];
 	}
+}
+
+- (id) tableView: (CPTableView) aTableView dataViewForTableColumn: (CPTableColumn) aTableColumn row: (CPInteger) aRowIndex
+{
+	var _model = [_selectedFigure model];
+	var tableColumnId = [aTableColumn identifier];
+	var propertyName = [_model propertyDisplayNameAt: aRowIndex];
+	var viewKind = "view_kind_" + _model + "_" + propertyName + "_" + tableColumnId;
+	var view = [aTableView makeViewWithIdentifier: viewKind owner: self];
+
+	if (view == null) {
+		if (aRowIndex < 0 || _model == nil) {
+			view = [[CPTableCellView alloc] initWithFrame:CGRectMakeZero()];
+		} else {
+			if (aTableColumn == _valueColumn) {
+				var propertyType = [_model propertyTypeAt: aRowIndex];
+				if ([propertyType isEqual: PropertyTypeBoolean]) {
+					var editableView = [CPCheckBox checkBoxWithTitle:@""];
+		        	[editableView sizeToFit];
+		        	[editableView setTarget: self];
+		        	[editableView setSendsActionOnEndEditing: YES];
+		        	[editableView setAction: @selector(toggleCheckbox:)];
+		        	[_checkboxMapping setObject: aRowIndex forKey: editableView];
+		        	
+		        	view = editableView;		
+				} else {
+					view = [aTableColumn _newDataView];
+				}
+			} else {
+				view = [aTableColumn _newDataView];
+			}
+		}
+		
+		[view setIdentifier: viewKind];
+	}
+	
+	var value = @"Undefined"
+	if (aTableColumn == _valueColumn) {
+		value = [_model propertyValueAt: aRowIndex];
+	} else {
+		value = [_model propertyDisplayNameAt: aRowIndex];
+	}
+	
+	[view setObjectValue: value];
+	
+	return view;
+}
+
+- (void) toggleCheckbox: (id) aSender
+{
+	var rowIndex = [_checkboxMapping objectForKey: aSender];
+	var model = [_selectedFigure model];
+	var value = [aSender objectValue];
+
+	[model propertyValueAt: rowIndex be: value];
 }
 
 - (void) selectionChanged
